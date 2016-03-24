@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 curl \
 --header "Content-type: application/json" \
 --request PUT \
