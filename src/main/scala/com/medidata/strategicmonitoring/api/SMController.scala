@@ -3,23 +3,19 @@ package com.medidata.strategicmonitoring.api
 import akka.actor.ActorSystem
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import org.reflections.Reflections
 
-import scala.collection.JavaConversions._
 import scala.collection.mutable.ListBuffer
-import scala.reflect.runtime.universe
+import com.medidata.strategicmonitoring.util.{ResourceFinder, ResourceLoader}
 
-object SMController {
+import scala.collection.Iterator
+
+object SMController extends ResourceFinder with ResourceLoader {
   def aggregateRoutes(actorSystem: ActorSystem): Route = {
-    val runtimeMirror = universe.runtimeMirror(getClass.getClassLoader)
-    val reflections = new Reflections("com.medidata.strategicmonitoring")
-    val subclasses = reflections.getSubTypesOf(classOf[Routable])
+    val routeResources: Iterator[String] = getResource("META-INF/routes")
     val routesList = new ListBuffer[Route]()
 
-    for (i <- subclasses) {
-      val module = runtimeMirror.staticModule(i.getName)
-      val obj = runtimeMirror.reflectModule(module)
-      val someTrait: Routable = obj.instance.asInstanceOf[Routable]
+    for (routeClass <- routeResources) {
+      val someTrait: Routable = getCompanionObject[Routable](routeClass.toString)
       routesList += someTrait.getRoutes(actorSystem)
     }
     routesList.reduceLeft(_ ~ _)

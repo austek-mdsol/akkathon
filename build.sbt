@@ -28,7 +28,6 @@ lazy val root = (project in file(".")).
     libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.12",
     libraryDependencies += "com.zaxxer" % "HikariCP" % "2.3.3",
     libraryDependencies += "com.twitter" %% "storehaus-cache" % "0.12.0",
-    libraryDependencies += "org.reflections" % "reflections" % "0.9.10",
     testOptions += Tests.Argument(TestFrameworks.JUnit, "-v")
   )
 
