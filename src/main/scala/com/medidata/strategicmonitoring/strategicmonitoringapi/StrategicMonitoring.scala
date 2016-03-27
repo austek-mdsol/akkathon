@@ -9,6 +9,7 @@ import akka.stream.ActorMaterializer
 import com.medidata.strategicmonitoring.issue.IssueController
 import com.medidata.strategicmonitoring.sitevisit.SiteVisitController
 import akka.http.scaladsl.server.Directives._
+import com.medidata.strategicmonitoring.api.SMController
 
 //boilerplate, not much to see here
 object StrategicMonitoring extends App {
@@ -23,9 +24,7 @@ object StrategicMonitoring extends App {
   import system.dispatcher
   
   //TODO figure out how to combine routes
-  val routes = IssueController.getRoutes (system) ~ SiteVisitController.getRoutes (system)
-  
-  val bindingFuture = Http().bindAndHandle(routes, "localhost", 8080)
+  val bindingFuture = Http().bindAndHandle(SMController.aggregateRoutes(system), "localhost", 8080)
   logger.info("StrategicMonitoring online at http://localhost:8080\nPress RETURN to stop...")
   Console.readLine() // for the future transformations
   bindingFuture

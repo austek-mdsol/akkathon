@@ -3,6 +3,7 @@ package com.medidata.strategicmonitoring.sitevisit
 import scala.concurrent.Await
 import org.slf4j.LoggerFactory
 import java.time.Instant
+
 import akka.actor.ActorRef
 import akka.actor.ActorSystem
 import akka.actor.Props
@@ -22,12 +23,13 @@ import akka.http.scaladsl.server.Directives.put
 import akka.http.scaladsl.server.Directives.segmentStringToPathMatcher
 import akka.pattern.ask
 import akka.http.scaladsl.model.StatusCodes
+import com.medidata.strategicmonitoring.api.Routable
 import com.mediddata.strategicmonioring.strategicmonitoringapi.Key
 import com.mediddata.strategicmonioring.strategicmonitoringapi.KeyAndVersion
 import com.mediddata.strategicmonioring.strategicmonitoringapi.ImplicitTimeout
 
 //SINGLETON
-object SiteVisitController extends ImplicitTimeout {
+object SiteVisitController extends Routable with  ImplicitTimeout {
 
   val logger = LoggerFactory.getLogger(getClass)
 
