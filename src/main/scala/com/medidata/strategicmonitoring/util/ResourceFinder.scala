@@ -1,7 +1,8 @@
 package com.medidata.strategicmonitoring.util
 
+import java.io.InputStream
+
 import scala.collection.Iterator
-import scala.tools.nsc.interpreter.InputStream
 
 trait ResourceFinder {
   def findResource(filename: String) = {
