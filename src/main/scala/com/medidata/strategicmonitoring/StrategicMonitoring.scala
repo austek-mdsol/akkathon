@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.RouteResult.route2HandlerFlow
 import akka.stream.ActorMaterializer
-import com.medidata.strategicmonitoring.controller.SMController
+import com.medidata.strategicmonitoring.util.RouteFactory
 import com.typesafe.config.ConfigFactory
 import org.slf4j.LoggerFactory
 
@@ -19,7 +19,7 @@ object StrategicMonitoring extends App {
 
   import system.dispatcher
 
-  val bindingFuture = Http().bindAndHandle(SMController.aggregateRoutes(system), "localhost", 8080)
+  val bindingFuture = Http().bindAndHandle(RouteFactory.aggregateRoutes(system), "localhost", 8080)
   logger.info("StrategicMonitoring online at http://localhost:8080\nPress RETURN to stop...")
   scala.io.StdIn.readLine() // for the future transformations
   bindingFuture
