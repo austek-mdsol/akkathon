@@ -14,15 +14,17 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.Await
 
 //SINGLETON
-object SiteVisitController extends Routable with  ImplicitTimeout {
+class SiteVisitController extends Routable with ImplicitTimeout {
 
   val logger = LoggerFactory.getLogger(getClass)
 
-  def getRoutes(actorSystem: ActorSystem) = {
+  override def title = "Site Visit Controller"
 
-    logger.info("SiteVisitController::getRoutes called");
+  override def getRoutes(actorSystem: ActorSystem) = {
+
+    logger.info("SiteVisitController::getRoutes called")
     val siteVisitActorFactoryActorRef = actorSystem.actorOf(Props(SiteVisitActorFactory), name = "SiteVisitActorFactory")
-  
+
     //just for POC
     val requestExistingSiteVisit: ExistingSiteVisit = new ExistingSiteVisit(new KeyAndVersion(new Key(), 1), "putAAA", "putBBB", Instant.now())
 
@@ -32,12 +34,15 @@ object SiteVisitController extends Routable with  ImplicitTimeout {
 
           //fake we've marshalled JSON -> NewSiteVisit
           val requestNewSiteVisit: NewSiteVisit = new NewSiteVisit("postAAA", "postBBB")
-          logger.info("POST, requestNewSiteVisit=" + requestNewSiteVisit);
-
-          val responseExistingSiteVisit = create(siteVisitActorFactoryActorRef, requestNewSiteVisit);
-          logger.info("POST, responseExistingSiteVisit=" + responseExistingSiteVisit + "\n\n\n");
-
-          complete(new HttpResponse(status = StatusCodes.Created))
+//          logger.info("POST, requestNewSiteVisit=" + requestNewSiteVisit);
+//
+//          val responseExistingSiteVisit = create(siteVisitActorFactoryActorRef, requestNewSiteVisit);
+//          logger.info("POST, responseExistingSiteVisit=" + responseExistingSiteVisit + "\n\n\n");
+//
+//          complete(new HttpResponse(status = StatusCodes.Created))
+          complete{
+            "Visit: "+ requestNewSiteVisit
+          }
         } ~ //post
           put {
 
@@ -96,4 +101,6 @@ object SiteVisitController extends Routable with  ImplicitTimeout {
   private def readByKeyAndVersion(siteVisitActorFactoryActorRef: ActorRef, keyAndVersion: KeyAndVersion): ExistingSiteVisit = Await.result((getSiteVisitActor(siteVisitActorFactoryActorRef, keyAndVersion.key) ? keyAndVersion), timeout.duration).asInstanceOf[ExistingSiteVisit]
 
   private def update(siteVisitActorFactoryActorRef: ActorRef, existingSiteVisit: ExistingSiteVisit): ExistingSiteVisit = Await.result((getSiteVisitActor(siteVisitActorFactoryActorRef, existingSiteVisit.keyAndVersion.key) ? existingSiteVisit), timeout.duration).asInstanceOf[ExistingSiteVisit]
-} //SiteVisitController
+}
+
+//SiteVisitController

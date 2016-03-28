@@ -11,6 +11,7 @@ object BuildSettings {
     organizationHomepage := Some(new URL("http://mdsol.com")),
     description := "Strategic Monitoring",
     scalaVersion := "2.11.7",
+    exportJars := true,
     scalacOptions := Seq(
       "-encoding", "utf8",
       "-feature",

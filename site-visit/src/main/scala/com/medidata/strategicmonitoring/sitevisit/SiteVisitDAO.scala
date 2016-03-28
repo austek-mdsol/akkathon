@@ -1,9 +1,9 @@
 package com.medidata.strategicmonitoring.sitevisit
 
 import java.time.Instant
+
+import com.medidata.strategicmonitoring.api.{Key, KeyAndVersion}
 import org.slf4j.LoggerFactory
-import com.mediddata.strategicmonioring.strategicmonitoringapi.Key
-import com.mediddata.strategicmonioring.strategicmonitoringapi.KeyAndVersion
 
 //TOTALLY FAKED
 //stateless singleton

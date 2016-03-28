@@ -14,11 +14,13 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.Await
 
 //SINGLETON
-object IssueController extends Routable with ImplicitTimeout {
+class IssueController extends Routable with ImplicitTimeout {
 
   val logger = LoggerFactory.getLogger(getClass)
 
-  def getRoutes(actorSystem: ActorSystem) = {
+  override def title = "Issue Controller"
+
+  override def getRoutes(actorSystem: ActorSystem) = {
     logger.info("IssueController::getRoutes called")
     val issueActorFactoryActorRef = actorSystem.actorOf(Props(IssueActorFactory), name = "IssueActorFactory")
   

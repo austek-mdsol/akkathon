@@ -19,5 +19,7 @@ object Dependencies {
   val akkaHttpSprayJson = "com.typesafe.akka" %% "akka-http-spray-json-experimental" % akkaVersion
   val storeHaus = "com.twitter" %% "storehaus-cache" % "0.12.0"
   val scalaReflect = "org.scala-lang" % "scala-reflect" % "2.11.7"
+  val slf4jApi = "org.slf4j" % "slf4j-api" % "1.7.5"
+  val slf4jSimple  = "org.slf4j" % "slf4j-simple" % "1.7.5"
 }
 

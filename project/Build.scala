@@ -20,10 +20,14 @@ object Build extends Build {
     .settings(basicSettings)
     .settings(libraryDependencies ++=
       compile(
-        akkaActor, akkaHttp, scalaReflect
+        akkaActor, akkaHttp, slf4jApi, slf4jSimple, scalaReflect
       )
     )
-    .dependsOn(smCore)
+    .dependsOn(
+      smCore,
+      issueManagement,
+      siteVisit
+    )
 
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -31,6 +35,7 @@ object Build extends Build {
   // -------------------------------------------------------------------------------------------------------------------
 
   lazy val utils = Project("utils", file("utils"))
+    .settings(basicSettings: _*)
 
   lazy val smCore = Project("smCore", file("sm-core"))
     .settings(basicSettings: _*)

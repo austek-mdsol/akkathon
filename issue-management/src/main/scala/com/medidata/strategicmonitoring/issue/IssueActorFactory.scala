@@ -37,7 +37,7 @@ object IssueActorFactory extends ImplicitTimeoutActor {
       val actorRef = context.actorOf(Props[IssueActor], name = "IssueActor=" + newIssue.keyAndVersion.key.toString())
       cache += (newIssue.keyAndVersion.key -> actorRef)
       sender ! actorRef
-      newIssue
+      //newIssue
 
     case key: Key =>
 

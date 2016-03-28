@@ -21,7 +21,7 @@ object StrategicMonitoring extends App {
 
   val bindingFuture = Http().bindAndHandle(SMController.aggregateRoutes(system), "localhost", 8080)
   logger.info("StrategicMonitoring online at http://localhost:8080\nPress RETURN to stop...")
-  scala.io.StdIn // for the future transformations
+  scala.io.StdIn.readLine() // for the future transformations
   bindingFuture
     .flatMap(_.unbind()) // trigger unbinding from the port
     .onComplete(_ ⇒ system.terminate()) // and shutdown when done
